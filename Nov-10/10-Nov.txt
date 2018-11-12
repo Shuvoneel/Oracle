@@ -1,0 +1,11 @@
+1. where = select d.DEPARTMENT_ID,d.DEPARTMENT_NAME,d.MANAGER_ID,d.LOCATION_ID,e.EMPLOYEE_ID,e.FIRST_NAME,e.LAST_NAME from departments d, employees e where e.department_id = d.department_id;
+
+2. Alias = select salary+500 "Total Salary" from employees;
+
+3. Alias AS = select salary+500 as Total from employees;
+
+4. Distinct = select distinct department_id from employees;
+
+5. Order = select LAST_NAME,	EMAIL,	PHONE_NUMBER,	HIRE_DATE from employees order by hire_date desc;
+
+6. Round = select salary,salary*1.123456 sal, round(salary*1.123456,2) rnd from employees;

@@ -1,0 +1,18 @@
+1. Mod = select salary, mod(salary,18) mod from employees;
+
+2. Concat = select concat('Hello ','World') concat from employees;
+
+3. Length + Concat = select first_name, last_name, length(concat(first_name,last_name)) length from employees;
+
+4. Lpad & Rpad = select lpad(salary,6,'*') lpad, rpad(salary,6,'*') rpad from employees;
+
+5. Replace = select first_name || ' ' || last_name name, replace(first_name || ' ' || last_name, 'David', 'Bale') replace from employees;
+
+6. Case-sensitivity = select first_name, last_name from employees
+where upper(FIRST_name) = 'DAVID' OR lower(LAST_NAME) = 'king';
+
+7. Substr = select first_name, last_name,job_id from employees
+where substr(job_id,4,6)='MAN';
+
+8. Mod + Where = select first_name, last_name,job_id from employees
+where MOD(SALARY,18)=6 AND SALARY<=10000;
