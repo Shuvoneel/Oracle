@@ -1,0 +1,50 @@
+Quiz -1: I want to see those people of it department whose salary are less than 15000?
+Answer: select * from employees
+where department_id = (select DEPARTMENT_id from departments
+where DEPARTMENT_NAME = 'IT') and salary < 15000;
+
+
+Quiz -2: I want to give bonus 500 to those employee who do not get any commission?
+Answer: select EMPLOYEE_ID,last_name,first_name,Salary+500 "New salary",COMMISSION_PCT from employees
+where COMMISSION_PCT is null;
+
+
+Create Table -3: create table bbc as select * from hr.employees;
+// where bbc = table name; hr = user name; employees = table will looks like.
+
+
+###. To see the table list in a system, first; log in as "connect sys as sysdba"; second; grant dba to hr; third; select USERNAME from DBA_USERS;
+
+
+###. To see the table names of an user: select table_name from USER_tables;
+
+
+Practice 3.1: select sysdate as "Date" from dual;
+
+
+Practice 3.2: select employee_id,last_name,salary,salary+(salary*.155) as "New Salary" from employees;
+
+
+Practice 3.4: select employee_id,last_name,salary,salary+(salary*.155) as "New Salary",(salary+(salary*.155))-salary as increase from employees;
+
+
+Practice 3.5: select initcap(last_name) name, length(last_name) length from employees
+where last_name like 'J%'
+or last_name like 'A%'
+or last_name like 'M%';
+
+
+Practice 3.6: select last_name, round(months_between(sysdate,hire_date)) months_worked from employees
+order by months_worked;
+
+
+Practice 3.7: select last_name, lpad(salary,15,'$') salary from employees;
+
+
+Practice 3.8: select substr(last_name,1,8) || lpad(salary,10,'*') as "Name_and_Salary" from employees
+order by salary desc;
+
+
+Practice 3.9: select last_name, round((sysdate-hire_date)/7) tenure  from employees
+where department_id=90
+order by tenure desc;
