@@ -41,8 +41,11 @@ order by months_worked;
 Practice 3.7: select last_name, lpad(salary,15,'$') salary from employees;
 
 
-Practice 3.8: select substr(last_name,1,8) || lpad(salary,10,'*') as "Name_and_Salary" from employees
-order by salary desc;
+Practice 3.8: select substr(last_name,1,8) || rpad(' ',salary/1000+1,'*') as "Name_and_Salary" from employees
+order by salary desc; or
+
+		SELECT rpad(last_name, 8)||' '|| rpad(' ', salary/1000+1, '*') 
+		EMPLOYEES_AND_THEIR_SALARIES FROM employees ORDER BY salary DESC; 
 
 
 Practice 3.9: select last_name, round((sysdate-hire_date)/7) tenure  from employees
