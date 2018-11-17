@@ -1,0 +1,5 @@
+
+Practice 4.1: select (last_name || ' earns ' || to_char(salary,'$99,999.99') || ' Monthly but wants ' || to_char(3*salary,'$99999.99')) as "Dream Salaries" from employees;
+
+
+Practice 4.1: 
