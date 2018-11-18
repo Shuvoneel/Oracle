@@ -1,0 +1,39 @@
+
+Practice 5.4: SELECT max(salary) maximum,min(salary) minimum,sum(salary) sum,round(avg(salary)) average
+FROM employees;
+
+
+Practice 5.5: SELECT job_id,max(salary) maximum,min(salary) minimum,sum(salary) sum,round(avg(salary)) average
+FROM employees
+group by job_id;
+
+
+Practice 5.6: SELECT job_id,count(job_id) count
+FROM employees
+group by job_id;
+
+
+Practice 5.7: SELECT count(distinct manager_id) as "Number of Managers"
+FROM employees;
+
+
+Practice 5.8: SELECT max(salary) maximum,min(salary) minimum,max(salary)- min(salary) difference
+FROM employees;
+
+
+Practice 5.9: SELECT manager_id, min(salary) min_sal
+FROM employees
+where manager_id is not null
+group by manager_id
+having min(salary)>6000
+order by min(salary) desc;
+
+
+Practice 5.10: SELECT COUNT(*) total, SUM(DECODE(TO_CHAR(hire_date, 'YYYY'),2003,1,0))"2003",
+SUM(DECODE(TO_CHAR(hire_date, 'YYYY'),2004,1,0))"2004",
+SUM(DECODE(TO_CHAR(hire_date, 'YYYY'),2005,1,0))"2005",
+SUM(DECODE(TO_CHAR(hire_date, 'YYYY'),2006,1,0))"2006"
+FROM employees;
+
+
+Practice 5.11:
