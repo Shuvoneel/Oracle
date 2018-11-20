@@ -1,0 +1,30 @@
+Practice 7.1: select LAST_NAME,  hire_date,department_id from employees
+where department_id in (select department_id from employees where last_name = 'Zlotkey')
+and last_name <> 'Zlotkey';
+
+
+Practice 7.2: select employee_id,LAST_NAME,  salary from employees
+where salary > (select avg(salary) from employees)
+order by salary;
+
+
+Practice 7.3: select employee_id, last_name,department_id from employees
+where department_id in (select department_id from employees where last_name like '%u%');
+
+
+Practice 7.4: select LAST_NAME, department_id, job_id from employees
+where department_id in (select department_id from departments where location_id =1700);
+
+
+Practice 7.5: select last_name,salary from employees
+where manager_id = 
+(select employee_id from employees where last_name ='King' and manager_id is null);
+
+
+Practice 7.6: select LAST_NAME, department_id, job_id from employees
+where department_id = (select department_id from departments where department_name = 'Executive');
+
+
+Practice 7.7: select employee_id, last_name,salary from employees
+where salary >(select avg(salary) from employees)
+and department_id in (select department_id from employees where last_name like '%u%');
