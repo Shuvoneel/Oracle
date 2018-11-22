@@ -1,0 +1,34 @@
+
+Practice 2.3: select last_name, salary from employees
+where salary < 5000 or salary > 12000;
+
+
+Practice 2.4: select first_name, last_name,job_id,hire_date from employees
+where last_name like 'Matos' or last_name like 'Taylor'
+order by hire_date;
+
+
+Practice 2.5: select last_name,department_id from employees
+where department_id = 20 or department_id = 50
+order by last_name;
+
+
+Practice 2.6: select last_name employee,salary "Month Salary",department_id from employees
+where salary between 5000 and 12000
+and department_id = 20
+or department_id = 50;
+
+
+Practice 2.7: select distinct job_id from employees;
+
+
+Practice 2.8: select last_name, job_id from employees where manager_id is null;
+
+
+Practice 2.9: select last_name, salary, COMMISSION_PCT from employees
+where COMMISSION_PCT > 0 //(is not null)
+order by COMMISSION_PCT,salary desc;
+
+
+Practice 2.10: select last_name, salary  from employees
+where salary > 12000 //&salary;

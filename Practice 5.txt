@@ -1,4 +1,5 @@
 
+
 Practice 5.4: SELECT max(salary) maximum,min(salary) minimum,sum(salary) sum,round(avg(salary)) average
 FROM employees;
 

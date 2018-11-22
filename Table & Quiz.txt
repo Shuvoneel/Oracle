@@ -1,0 +1,21 @@
+
+
+Quiz -1: I want to see those people of it department whose salary are less than 15000?
+Answer: select * from employees
+where department_id = (select DEPARTMENT_id from departments
+where DEPARTMENT_NAME = 'IT') and salary < 15000;
+
+
+Quiz -2: I want to give bonus 500 to those employee who do not get any commission?
+Answer: select EMPLOYEE_ID,last_name,first_name,Salary+500 "New salary",COMMISSION_PCT from employees
+where COMMISSION_PCT is null;
+
+
+Create Table -3: create table bbc as select * from hr.employees;
+// where bbc = table name; hr = user name; employees = table will looks like.
+
+
+###. To see the table list in a system, first; log in as "connect sys as sysdba"; second; grant dba to hr; third; select USERNAME from DBA_USERS;
+
+
+###. To see the table names of an user: select table_name from USER_tables;

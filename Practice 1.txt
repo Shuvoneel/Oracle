@@ -1,0 +1,11 @@
+
+
+Practice 1.9 = select last_name, job_id, last_name || ',' || ' ' || job_id "Employee & Title" from employees;
+
+
+Practice 1.10 = select EMPLOYEE_ID || ',' || FIRST_NAME || ',' || LAST_NAME || ',' || EMAIL || ',' || PHONE_NUMBER || ',' || HIRE_DATE || ',' || JOB_ID || ',' || SALARY || ',' || COMMISSION_PCT || ',' || MANAGER_ID || ',' || DEPARTMENT_ID the_output from employees;
+
+
+Practice 1.11 = select employee_id,last_name, salary,department_id  from employees
+where manager_id = 103
+order by last_name;

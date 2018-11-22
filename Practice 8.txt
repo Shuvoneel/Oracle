@@ -1,0 +1,27 @@
+
+
+Practice 8.1: select department_id,to_char(null) job from departments
+minus
+select department_id,job_id from employees
+where job_id='ST_CLERK';
+
+
+Practice 8.2: select COUNTRY_ID,COUNTRY_NAME from countries
+minus
+SELECT l.country_id,c.country_name
+FROM locations l, countries c
+WHERE l.country_id = c.country_id;
+
+
+Practice 8.3: 
+
+
+Practice 8.4: select employee_id,job_id from employees
+intersect
+select employee_id,job_id from job_history;
+
+
+Practice 8.5: select last_name,department_id,to_char(null) department from employees
+union
+select to_char(null),department_id,department_name from departments;
+>>>>>>> 210e6e19b876945b3d211c983aa7fd1916bf0959
