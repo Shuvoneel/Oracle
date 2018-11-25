@@ -1,0 +1,34 @@
+
+Practice 6.1: select location_id,street_address,city,state_province,country_name
+from locations natural join countries;
+OR
+select l.location_id,l.street_address,l.city,l.state_province,c.country_name
+from locations l join countries c
+on (l.country_id=c.country_id);
+OR
+select location_id,street_address,city,state_province,country_name
+from locations join countries
+using(country_id);
+
+
+Practice 6.2: select last_name,DEPARTMENT_ID,DEPARTMENT_NAME	
+from employees join departments
+using (DEPARTMENT_ID);
+OR
+select e.last_name,d.DEPARTMENT_ID,d.DEPARTMENT_NAME	
+from employees e join departments d
+on (e.DEPARTMENT_ID=d.DEPARTMENT_ID);
+
+
+Practice 6.3: select e.last_name,e.job_id,d.DEPARTMENT_ID,d.DEPARTMENT_NAME	
+from employees e join departments d
+on (e.DEPARTMENT_ID=d.DEPARTMENT_ID)
+join locations l
+on (d.location_id=l.location_id)
+where LOWER(l.city) = 'toronto';
+
+
+Practice 6.4:
+
+
+Practice 6.5:

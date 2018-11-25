@@ -29,7 +29,4 @@ where department_id = (select department_id from departments where department_na
 
 Practice 7.7: select employee_id, last_name,salary from employees
 where salary >(select avg(salary) from employees)
-<<<<<<< HEAD
-and department_id in (select department_id from employees where last_name like '%u%');
-=======
 and department_id in (select department_id from employees where last_name like '%u%');

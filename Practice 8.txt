@@ -24,4 +24,3 @@ select employee_id,job_id from job_history;
 Practice 8.5: select last_name,department_id,to_char(null) department from employees
 union
 select to_char(null),department_id,department_name from departments;
->>>>>>> 210e6e19b876945b3d211c983aa7fd1916bf0959
