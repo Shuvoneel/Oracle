@@ -11,7 +11,7 @@ Answer: select EMPLOYEE_ID,last_name,first_name,Salary+500 "New salary",COMMISSI
 where COMMISSION_PCT is null;
 
 
-Create Table -3: create table bbc as select * from hr.employees;
+### Create Table -3: create table bbc as select * from hr.employees;
 // where bbc = table name; hr = user name; employees = table will looks like.
 
 
@@ -19,3 +19,5 @@ Create Table -3: create table bbc as select * from hr.employees;
 
 
 ###. To see the table names of an user: select table_name from USER_tables;
+
+### Sequence: select > from > where > group by > having > order by
