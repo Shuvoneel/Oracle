@@ -1,0 +1,109 @@
+
+...........................................................December 01, 2018..............................................
+.......................................Connect user................................................................
+SQL> connect sys as sysdba;
+Enter password:
+Connected.
+SQL> conn
+Enter user-name: hr
+Enter password:
+Connected.
+
+......................................................Create Table.......................................................
+SQL> create table brand(id number(2) primary key,name varchar2(25));
+
+Table created.
+
+SQL> create table company(id number(2) primary key,name varchar2(25) not null unique,address varchar2(50),brand_id number(2) not null,constraint brand_company foreign key (brand_id) references brand(id));
+
+Table created.
+
+.......................................................Inserting Data...................................................
+SQL> insert into brand(id,name) values(01,'Google');
+
+1 row created.
+
+SQL> insert into brand(id,name) values(02,'Apple');
+
+1 row created.
+
+SQL> insert into brand(id,name) values(04,'Nokia');
+
+1 row created.
+
+SQL> insert into company(id,name,address,brand_id) values(01,'Google Inc.','18,New Street',01);
+
+1 row created.
+
+SQL> insert into company(id,name,address,brand_id) values(02,'Apple Inc.','29,Gothum Street',02);
+
+1 row created.
+
+SQL> insert into company(id,name,address,brand_id) values(03,'Samsung Inc.','29,Olive Street',03);
+
+1 row created.
+
+............................................Describe Table for Details.................................................
+SQL> desc brand;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(2)
+ NAME                                               VARCHAR2(25)
+
+SQL> desc company;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(2)
+ NAME                                      NOT NULL VARCHAR2(25)
+ ADDRESS                                            VARCHAR2(50)
+ BRAND_ID                                  NOT NULL NUMBER(2)
+
+
+.................................................Insert data from another Table........................................
+SQL> insert into brand(id,name) select department_id,department_name from departments where department_id=50;
+
+1 row created.
+
+
+.................................................Update Table data....................................................
+SQL> update brand set name='Fedex' where id=50;
+
+1 row updated.
+
+SQL> update brand set id=03 where name='Fedex';
+
+1 row updated.
+
+SQL> update company set brand_id=(select brand_id from company where name='Google Inc.') where id=03;
+
+1 row updated.
+
+
+................................................Show & Set Auto Commit..............................................
+SQL> show autocommit;
+autocommit OFF
+SQL> set autocommit on;
+SQL> commit;
+
+Commit complete.
+
+SQL> show autocommit;
+autocommit IMMEDIATE
+
+
+.......................................................delete Table or Data...........................................
+SQL> drop table category;
+
+Table dropped.
+
+SQL> delete brand where id=04;
+
+1 row deleted.
+
+SQL> delete from brand;
+
+3 rows deleted.
+
+SQL> truncate table brand;  /////It works with DDL Statement....................................................
+
+table truncated;
