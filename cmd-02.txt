@@ -1,0 +1,80 @@
+SQL> conn
+Enter user-name: hr
+Connected.
+SQL> select * from dhaka;
+
+        ID NAME                      MOBILE         EMAIL               INCOME  
+---------- ------------------------- -------------- --------------- ----------  
+REGI_DATE COUNTRY                                                               
+--------- --------------------                                                  
+         1 A                         8801717677451  mvo@gmail.com        20000  
+05-DEC-18 Bangladesh                                                            
+                                                                                
+         2 B                         8801717677461  mvo@gml.com          25000  
+05-DEC-18 Bangladesh                                                            
+                                                                                
+
+SQL> create view dha_view1 as select id,name,email from dhaka;
+
+View created.
+
+SQL> desc dha_view1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(15)
+ NAME                                      NOT NULL VARCHAR2(25)
+ EMAIL                                              VARCHAR2(15)
+
+SQL> select * from dha_view1;
+
+        ID NAME                      EMAIL                                      
+---------- ------------------------- ---------------                            
+         1 A                         mvo@gmail.com                              
+         2 B                         mvo@gml.com                                
+
+SQL> CREATE OR REPLACE VIEW empvu80
+  2  (id_number, name, sal, department_id)
+  3  AS SELECT employee_id, first_name || ' '
+  4  || last_name, salary, department_id
+  5  FROM employees
+  6  
+SQL> 
+SQL> create or replace view empvu80(id_number,name,sal,department_id) as select employee_id,first_name||' ' ||last_name,salary,department_id from employees;
+
+View created.
+
+
+
+SQL> CREATE OR REPLACE VIEW dept_sum_vu(name, minsal, maxsal, avgsal) AS SELECT d.department_name, MIN(e.salary), MAX(e.salary),AVG(e.salary) FROM employees e JOIN departments d ON (e.department_id = d.department_id) GROUP BY d.department_name;
+
+View created.
+
+SQL>  select view_name from user_views;
+SQL>  select table_name from user_tables;
+SQL>  select sequence_name from user_sequences;
+
+SQL> create sequence dha_seq increment by 5 start with 5000 maxvalue 5100 nocache nocycle;
+
+Sequence created.
+
+SQL> insert into dhaka(id,name,mobile,email,income) values(dha_seq.nextval,'AAA',+017176774891,'d@gml.com',25000);
+
+1 row created.
+
+SQL> insert into dhaka(id,name,mobile,email,income) values(dha_seq.nextval,'BBB',+017176775891,'e@gml.com',30000);
+
+1 row created.
+
+SQL> CREATE INDEX emp_last_name_idx ON employees(last_name);
+
+Index created.
+
+SQL> select index_name from user_indexes;
+
+SQL> create synonym e20 for empvu80;
+
+Synonym created.
+
+SQL> select * from e20;
+
+

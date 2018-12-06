@@ -1,8 +1,5 @@
-
-SQL> spool E:\cmd-01.txt
 SQL> conn
 Enter user-name: hr
-Enter password:
 Connected.
 SQL> create table dhaka(id number(15) primary key,name varchar2(25) not null, mobile char(11),email varchar2(15) unique,income number(11,2) check (income>19999) not null, regi_date date default sysdate, country varchar2(20) default 'Bangladesh');
 
@@ -42,15 +39,15 @@ SQL> insert into dhaka(id,name,mobile,email,income) values(1,'A',+8801717677451,
 insert into dhaka(id,name,mobile,email,income) values(1,'A',+8801717677451,'mhshuvo@gmail.com',15000)
                                                                            *
 ERROR at line 1:
-ORA-12899: value too large for column "HR"."DHAKA"."EMAIL" (actual: 17,
-maximum: 15)
+ORA-12899: value too large for column "HR"."DHAKA"."EMAIL" (actual: 17, 
+maximum: 15) 
 
 
 SQL> insert into dhaka(id,name,mobile,email,income) values(1,'A',+8801717677451,'mvo@gmail.com',15000);
 insert into dhaka(id,name,mobile,email,income) values(1,'A',+8801717677451,'mvo@gmail.com',15000)
 *
 ERROR at line 1:
-ORA-02290: check constraint (HR.SYS_C007039) violated
+ORA-02290: check constraint (HR.SYS_C007039) violated 
 
 
 SQL> insert into dhaka(id,name,mobile,email,income) values(1,'A',+8801717677451,'mvo@gmail.com',20000);
@@ -61,14 +58,14 @@ SQL> insert into dhaka(id,name,mobile,email,income) values(2,'B',+8801717677451,
 insert into dhaka(id,name,mobile,email,income) values(2,'B',+8801717677451,'mvo@gmail.com',25000)
 *
 ERROR at line 1:
-ORA-00001: unique constraint (HR.SYS_C007041) violated
+ORA-00001: unique constraint (HR.SYS_C007041) violated 
 
 
 SQL> insert into dhaka(id,name,mobile,email,income) values(2,'B',+8801717677461,'mvo@gmail.com',25000);
 insert into dhaka(id,name,mobile,email,income) values(2,'B',+8801717677461,'mvo@gmail.com',25000)
 *
 ERROR at line 1:
-ORA-00001: unique constraint (HR.SYS_C007041) violated
+ORA-00001: unique constraint (HR.SYS_C007041) violated 
 
 
 SQL> insert into dhaka(id,name,mobile,email,income) values(2,'B',+8801717677461,'mvo@gml.com',25000);
@@ -83,7 +80,7 @@ SQL> insert into dhaka(id,name,mobile,email,income) values(2,'B',+8801717677461,
 insert into dhaka(id,name,mobile,email,income) values(2,'B',+8801717677461,'mvo@gml.com',25000)
             *
 ERROR at line 1:
-ORA-12081: update operation not allowed on table "HR"."DHAKA"
+ORA-12081: update operation not allowed on table "HR"."DHAKA" 
 
 
 SQL> ALTER TABLE dhaka READ WRITE;
@@ -96,25 +93,25 @@ SQL> insert into dhaka(id,name,mobile,email,income) values(3,'B',+8801717677461,
 
 SQL> select * from dhaka;
 
-        ID NAME                      MOBILE         EMAIL               INCOME
----------- ------------------------- -------------- --------------- ----------
-REGI_DATE COUNTRY
---------- --------------------
-         1 A                         8801717677451  mvo@gmail.com        20000
-05-DEC-18 Bangladesh
-
-         2 B                         8801717677461  mvo@gml.com          25000
-05-DEC-18 Bangladesh
-
-         3 B                         8801717677461  abc@gml.com          30000
-05-DEC-18 Bangladesh
-
+        ID NAME                      MOBILE         EMAIL               INCOME  
+---------- ------------------------- -------------- --------------- ----------  
+REGI_DATE COUNTRY                                                               
+--------- --------------------                                                  
+         1 A                         8801717677451  mvo@gmail.com        20000  
+05-DEC-18 Bangladesh                                                            
+                                                                                
+         2 B                         8801717677461  mvo@gml.com          25000  
+05-DEC-18 Bangladesh                                                            
+                                                                                
+         3 B                         8801717677461  abc@gml.com          30000  
+05-DEC-18 Bangladesh                                                            
+                                                                                
 
 SQL> update dhaka set name='C' where salary = 30000;
 update dhaka set name='C' where salary = 30000
                                 *
 ERROR at line 1:
-ORA-00904: "SALARY": invalid identifier
+ORA-00904: "SALARY": invalid identifier 
 
 
 SQL> update dhaka set name='C' where income = 30000;
@@ -123,25 +120,25 @@ SQL> update dhaka set name='C' where income = 30000;
 
 SQL> select * from dhaka;
 
-        ID NAME                      MOBILE         EMAIL               INCOME
----------- ------------------------- -------------- --------------- ----------
-REGI_DATE COUNTRY
---------- --------------------
-         1 A                         8801717677451  mvo@gmail.com        20000
-05-DEC-18 Bangladesh
-
-         2 B                         8801717677461  mvo@gml.com          25000
-05-DEC-18 Bangladesh
-
-         3 C                         8801717677461  abc@gml.com          30000
-05-DEC-18 Bangladesh
-
+        ID NAME                      MOBILE         EMAIL               INCOME  
+---------- ------------------------- -------------- --------------- ----------  
+REGI_DATE COUNTRY                                                               
+--------- --------------------                                                  
+         1 A                         8801717677451  mvo@gmail.com        20000  
+05-DEC-18 Bangladesh                                                            
+                                                                                
+         2 B                         8801717677461  mvo@gml.com          25000  
+05-DEC-18 Bangladesh                                                            
+                                                                                
+         3 C                         8801717677461  abc@gml.com          30000  
+05-DEC-18 Bangladesh                                                            
+                                                                                
 
 SQL> update dhaka set mobile=+8801717677471 where salary = 30000;
 update dhaka set mobile=+8801717677471 where salary = 30000
                                              *
 ERROR at line 1:
-ORA-00904: "SALARY": invalid identifier
+ORA-00904: "SALARY": invalid identifier 
 
 
 SQL> update dhaka set mobile=+8801717677471 where income = 30000;
@@ -150,19 +147,19 @@ SQL> update dhaka set mobile=+8801717677471 where income = 30000;
 
 SQL> select * from dhaka;
 
-        ID NAME                      MOBILE         EMAIL               INCOME
----------- ------------------------- -------------- --------------- ----------
-REGI_DATE COUNTRY
---------- --------------------
-         1 A                         8801717677451  mvo@gmail.com        20000
-05-DEC-18 Bangladesh
-
-         2 B                         8801717677461  mvo@gml.com          25000
-05-DEC-18 Bangladesh
-
-         3 C                         8801717677471  abc@gml.com          30000
-05-DEC-18 Bangladesh
-
+        ID NAME                      MOBILE         EMAIL               INCOME  
+---------- ------------------------- -------------- --------------- ----------  
+REGI_DATE COUNTRY                                                               
+--------- --------------------                                                  
+         1 A                         8801717677451  mvo@gmail.com        20000  
+05-DEC-18 Bangladesh                                                            
+                                                                                
+         2 B                         8801717677461  mvo@gml.com          25000  
+05-DEC-18 Bangladesh                                                            
+                                                                                
+         3 C                         8801717677471  abc@gml.com          30000  
+05-DEC-18 Bangladesh                                                            
+                                                                                
 
 SQL> update dhaka set email='a@gml.com' where income = 20000;
 
@@ -178,15 +175,18 @@ SQL> update dhaka set email='c@gml.com' where income = 30000;
 
 SQL> select * from dhaka;
 
-        ID NAME                      MOBILE         EMAIL               INCOME
----------- ------------------------- -------------- --------------- ----------
-REGI_DATE COUNTRY
---------- --------------------
-         1 A                         8801717677451  a@gml.com            20000
-05-DEC-18 Bangladesh
+        ID NAME                      MOBILE         EMAIL               INCOME  
+---------- ------------------------- -------------- --------------- ----------  
+REGI_DATE COUNTRY                                                               
+--------- --------------------                                                  
+         1 A                         8801717677451  a@gml.com            20000  
+05-DEC-18 Bangladesh                                                            
+                                                                                
+         2 B                         8801717677461  b@gml.com            25000  
+05-DEC-18 Bangladesh                                                            
+                                                                                
+         3 C                         8801717677471  c@gml.com            30000  
+05-DEC-18 Bangladesh                                                            
+                                                                                
 
-         2 B                         8801717677461  b@gml.com            25000
-05-DEC-18 Bangladesh
-
-         3 C                         8801717677471  c@gml.com            30000
-05-DEC-18 Bangladesh
+SQL> spool off
