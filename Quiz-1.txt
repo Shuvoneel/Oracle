@@ -1,0 +1,402 @@
+
+QQQQ: IDB has 5 employees. Among them,
+
+1 is super user = create session,table,view,sequence
+2 are adnin = create session,table
+2 are operator = view
+
+And create table as test_1 and test_2 with 5 data.
+......................................................................................................................
+
+
+SQL> connect sys as sysdba;
+Enter password:
+Connected.
+
+SQL> create role super_user;
+
+Role created.
+
+SQL> grant create session,create table,create view,create sequence to super_user;
+
+Grant succeeded.
+
+SQL> create role admin;
+
+Role created.
+
+SQL> grant create session,create table to admin;
+
+Grant succeeded.
+
+SQL> create role operator;
+
+Role created.
+
+SQL> create user shuvo identified by shuvo;
+
+User created.
+
+SQL> create user olive identified by olive;
+
+User created.
+
+SQL> create user polash identified by polash;
+
+User created.
+
+SQL> create user babu identified by babu;
+
+User created.
+
+SQL> create user mahin identified by mahin;
+
+User created.
+
+SQL> grant super_user to shuvo;
+
+Grant succeeded.
+
+SQL> grant admin to olive;
+
+Grant succeeded.
+
+SQL> grant admin to polash;
+
+Grant succeeded.
+
+SQL> grant operator to babu;
+
+Grant succeeded.
+
+SQL> grant operator to mahin;
+
+Grant succeeded.
+
+SQL> conn
+Enter user-name: shuvo
+Enter password:
+Connected.
+SQL> create table test_1(id number(7) primary key unique,name varchar2(55),email varchar2(55));
+create table test_1(id number(7) primary key unique,name varchar2(55),email varchar2(55))
+                                             *
+ERROR at line 1:
+ORA-02259: duplicate UNIQUE/PRIMARY KEY specifications
+
+
+SQL> create table test_1(id number(7) primary key,name varchar2(55),email varchar2(55));
+create table test_1(id number(7) primary key,name varchar2(55),email varchar2(55))
+*
+ERROR at line 1:
+ORA-01950: no privileges on tablespace 'SYSTEM'
+
+
+SQL> connect sys as sysdba;
+Enter password:
+Connected.
+SQL> grant unlimited to shuvo;
+grant unlimited to shuvo
+      *
+ERROR at line 1:
+ORA-01919: role 'UNLIMITED' does not exist
+
+
+SQL> grant unlimited tablespace to shuvo;
+
+Grant succeeded.
+
+SQL> grant 500m tablespace to olive;
+grant 500m tablespace to olive
+      *
+ERROR at line 1:
+ORA-00990: missing or invalid privilege
+
+
+SQL> alter user olive quota 500m on system;
+
+User altered.
+
+SQL> alter user polash quota 500m on system;
+
+User altered.
+
+SQL> alter user babu quota 100m on system;
+
+User altered.
+
+SQL> alter user mahin quota 100m on system;
+
+User altered.
+
+SQL> conn
+Enter user-name: shuvo
+Enter password:
+Connected.
+SQL> create table test_1(id number(7) primary key,name varchar2(55),email varchar2(55));
+
+Table created.
+
+SQL> create sequence test_seq_1 increment by 5 start with 100 maxvalue 5000 nocache nocycle;
+
+Sequence created.
+
+SQL> inser into test_1(id,name,email) values(test_seq_1,'Mehedi Hasan','aaa@gmail.com');
+SP2-0734: unknown command beginning "inser into..." - rest of line ignored.
+SQL> inser into test_1(id,name,email) values(test_seq_1.nextval,'Mehedi Hasan','aaa@gmail.com');
+SP2-0734: unknown command beginning "inser into..." - rest of line ignored.
+SQL> insert into test_1(id,name,email) values(test_seq_1,'Mehedi Hasan','aaa@gmail.com');
+insert into test_1(id,name,email) values(test_seq_1,'Mehedi Hasan','aaa@gmail.com')
+                                         *
+ERROR at line 1:
+ORA-00984: column not allowed here
+
+
+SQL> insert into test_1(id,name,email) values(test_seq_1.nextval,'Mehedi Hasan','aaa@gmail.com');
+
+1 row created.
+
+SQL> insert into test_1(id,name,email) values(test_seq_1.nextval,'Suad Rifat','bbb@gmail.com');
+
+1 row created.
+
+SQL> insert into test_1(id,name,email) values(test_seq_1.nextval,'Abu Jubayer','ccc@gmail.com');
+
+1 row created.
+
+SQL> insert into test_1(id,name,email) values(test_seq_1.nextval,'Mahin Hasan','ddd@gmail.com');
+
+1 row created.
+
+SQL> insert into test_1(id,name,email) values(test_seq_1.nextval,'Rony Sarker','eee@gmail.com');
+
+1 row created.
+
+SQL> desc test-1;
+SP2-0565: Illegal identifier.
+SQL> desc test_1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(7)
+ NAME                                               VARCHAR2(55)
+ EMAIL                                              VARCHAR2(55)
+
+SQL> select * from test_1;
+
+        ID NAME
+---------- -------------------------------------------------------
+EMAIL
+-------------------------------------------------------
+       100 Mehedi Hasan
+aaa@gmail.com
+
+       105 Suad Rifat
+bbb@gmail.com
+
+       110 Abu Jubayer
+ccc@gmail.com
+
+
+        ID NAME
+---------- -------------------------------------------------------
+EMAIL
+-------------------------------------------------------
+       115 Mahin Hasan
+ddd@gmail.com
+
+       120 Rony Sarker
+eee@gmail.com
+
+
+SQL> conn
+Enter user-name: olive
+Enter password:
+Connected.
+SQL> create table test_2(id number(7) primary key,name varchar2(55),email varchar2(55));
+
+Table created.
+
+SQL> create sequence test_seq_2 increment by 5 start with 200 maxvalue 5000 nocache nocycle;
+create sequence test_seq_2 increment by 5 start with 200 maxvalue 5000 nocache nocycle
+*
+ERROR at line 1:
+ORA-01031: insufficient privileges
+
+
+SQL> insert into test_1(id,name,email) values(test_seq_1.nextval,'Mehedi Hasan','aaa@gmail.com');
+insert into test_1(id,name,email) values(test_seq_1.nextval,'Mehedi Hasan','aaa@gmail.com')
+            *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> insert into test_2(id,name,email) values(200,'Mehedi Hasan','aaa@gmail.com');
+
+1 row created.
+
+SQL> insert into test_2(id,name,email) values(205,'Suad Rifat','bbb@gmail.com');
+
+1 row created.
+
+SQL> insert into test_2(id,name,email) values(210,'Abu Jubayer','ccc@gmail.com');
+
+1 row created.
+
+SQL> insert into test_2(id,name,email) values(215,'Mahin Hasan','ddd@gmail.com');
+
+1 row created.
+
+SQL> insert into test_2(id,name,email) values(220,'Rony Sarker','eee@gmail.com');
+
+1 row created.
+
+SQL> select * from olive;
+select * from olive
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> conn
+Enter user-name: babu
+Enter password:
+ERROR:
+ORA-01045: user BABU lacks CREATE SESSION privilege; logon denied
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> connect sys as sysdba;
+Enter password:
+Connected.
+SQL> grant create session to babu;
+
+Grant succeeded.
+
+SQL> conn
+Enter user-name: shuvo
+Enter password:
+Connected.
+SQL> create view test_view_1 as select * from test_1;
+
+View created.
+
+SQL> grant select on test_1 to babu;
+
+Grant succeeded.
+
+SQL> conn
+Enter user-name: babu
+Enter password:
+Connected.
+SQL> create view test_view_1 as select * from shuvo.test_1;
+create view test_view_1 as select * from shuvo.test_1
+            *
+ERROR at line 1:
+ORA-01031: insufficient privileges
+
+
+SQL> connect sys as sysdba;
+Enter password:
+Connected.
+SQL> grant create view to babu;
+
+Grant succeeded.
+
+SQL> conn
+Enter user-name: babu
+Enter password:
+Connected.
+SQL> create view test_view_1 as select * from shuvo.test_1;
+
+View created.
+
+SQL> connect sys as sysdba;
+Enter password:
+Connected.
+SQL> select * from shuvo;
+select * from shuvo
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> conn
+Enter user-name: shuvo
+Enter password:
+Connected.
+SQL> select * from shuvo;
+select * from shuvo
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from test_1;
+
+        ID NAME
+---------- -------------------------------------------------------
+EMAIL
+-------------------------------------------------------
+       100 Mehedi Hasan
+aaa@gmail.com
+
+       105 Suad Rifat
+bbb@gmail.com
+
+       110 Abu Jubayer
+ccc@gmail.com
+
+
+        ID NAME
+---------- -------------------------------------------------------
+EMAIL
+-------------------------------------------------------
+       115 Mahin Hasan
+ddd@gmail.com
+
+       120 Rony Sarker
+eee@gmail.com
+
+
+SQL> conn
+Enter user-name: olive
+Enter password:
+Connected.
+SQL> select * from test_2;
+
+        ID NAME
+---------- -------------------------------------------------------
+EMAIL
+-------------------------------------------------------
+       200 Mehedi Hasan
+aaa@gmail.com
+
+       205 Suad Rifat
+bbb@gmail.com
+
+       210 Abu Jubayer
+ccc@gmail.com
+
+
+        ID NAME
+---------- -------------------------------------------------------
+EMAIL
+-------------------------------------------------------
+       215 Mahin Hasan
+ddd@gmail.com
+
+       220 Rony Sarker
+eee@gmail.com
+
+
+SQL> conn
+Enter user-name: babu
+Enter password:
+Connected.
+SQL> desc test_view_1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(7)
+ NAME                                               VARCHAR2(55)
+ EMAIL                                              VARCHAR2(55)
+
+SQL>

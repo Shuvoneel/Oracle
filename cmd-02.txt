@@ -52,6 +52,7 @@ View created.
 SQL>  select view_name from user_views;
 SQL>  select table_name from user_tables;
 SQL>  select sequence_name from user_sequences;
+SQL>  select USERNAME from DBA_USERS;
 
 SQL> create sequence dha_seq increment by 5 start with 5000 maxvalue 5100 nocache nocycle;
 

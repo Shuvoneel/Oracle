@@ -1,0 +1,226 @@
+
+
+...................................................User Privileges.......................................................
+
+
+SQL> connect sys as sysdba
+Enter password:
+Connected.
+SQL> create user demo identified by demo;
+
+User created.
+
+SQL> conn
+Enter user-name: demo
+Enter password:
+ERROR:
+ORA-01045: user DEMO lacks CREATE SESSION privilege; logon denied
+
+Warning: You are no longer connected to ORACLE.
+
+SQL> connect sys as sysdba
+Enter password:
+Connected.
+SQL> grant create session to demo;
+
+Grant succeeded.
+
+SQL> conn
+Enter user-name: demo
+Enter password:
+Connected.
+SQL> create table test(id number(5) primary key,name varchar2(50));
+create table test(id number(5) primary key,name varchar2(50))
+*
+ERROR at line 1:
+ORA-01031: insufficient privileges
+
+
+SQL> connect sys as sysdba
+Enter password:
+Connected.
+SQL> grant create table,create sequence,create procedure,create view to demo;
+
+Grant succeeded.
+
+SQL> conn
+Enter user-name: demo
+Enter password:
+Connected.
+SQL> create table test(id number(5) primary key,name varchar2(50));
+create table test(id number(5) primary key,name varchar2(50))
+*
+ERROR at line 1:
+ORA-01950: no privileges on tablespace 'SYSTEM'
+
+
+SQL> connect sys as sysdba
+Enter password:
+Connected.
+SQL> grant unlimited tablespace to demo;
+
+Grant succeeded.
+
+SQL> alter user demo quota 500m on system;
+
+User altered.
+
+SQL> conn
+Enter user-name: demo
+Enter password:
+Connected.
+SQL> create table test(id number(5) primary key,name varchar2(50));
+
+Table created.
+
+SQL> connect sys as sysdba
+Enter password:
+Connected.
+SQL> create role chairman;
+
+Role created.
+
+SQL> create role director;
+
+Role created.
+
+SQL> grant create session,create table,create sequence,create procedure,create view to chairman;
+
+Grant succeeded.
+
+SQL> grant create session,create view to director;
+
+Grant succeeded.
+
+SQL> create user hasina identified by hasina;
+
+User created.
+
+SQL> create user khaleda identified by khaleda;
+
+User created.
+
+SQL> grant chairman to hasina;
+
+Grant succeeded.
+
+SQL> grant director to khaleda;
+
+Grant succeeded.
+
+SQL> conn
+Enter user-name: khaleda
+Enter password:
+Connected.
+SQL> create table test(id number(5) primary key,name varchar2(50));
+create table test(id number(5) primary key,name varchar2(50))
+*
+ERROR at line 1:
+ORA-01031: insufficient privileges
+
+
+SQL> conn
+Enter user-name: hasina
+Enter password:
+Connected.
+SQL> create table test(id number(5) primary key,name varchar2(50));
+create table test(id number(5) primary key,name varchar2(50))
+*
+ERROR at line 1:
+ORA-01950: no privileges on tablespace 'SYSTEM'
+
+
+SQL> connect sys as sysdba
+Enter password:
+Connected.
+SQL> grant unlimited tablespace to chairman;
+
+Grant succeeded.
+
+SQL> grant unlimited tablespace to director;
+
+Grant succeeded.
+
+SQL> conn
+Enter user-name: hasina
+Enter password:
+Connected.
+SQL> create table test(id number(5) primary key,name varchar2(50));
+create table test(id number(5) primary key,name varchar2(50))
+*
+ERROR at line 1:
+ORA-01950: no privileges on tablespace 'SYSTEM'
+
+
+SQL> connect sys as sysdba
+Enter password:
+Connected.
+SQL> grant unlimited tablespace to hasina;
+
+Grant succeeded.
+
+SQL> grant unlimited tablespace to khaleda;
+
+Grant succeeded.
+
+SQL> conn
+Enter user-name: hasina
+Enter password:
+Connected.
+SQL> create table test(id number(5) primary key,name varchar2(50));
+
+Table created.
+
+SQL> create view test_view_1 as select * from test;
+
+View created.
+
+SQL> conn
+Enter user-name: khaleda
+Enter password:
+Connected.
+SQL> create view test_view_2 as select * from test;
+create view test_view_2 as select * from test
+                                         *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> create view test_view_2 as select * from hasina.test;
+create view test_view_2 as select * from hasina.test
+                                                *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> conn
+Enter user-name: hasina
+Enter password:
+Connected.
+SQL> grant select on test to khaleda;
+
+Grant succeeded.
+
+SQL> conn
+Enter user-name: khaleda
+Enter password:
+Connected.
+SQL> create view test_view_1 as select * from hasina.test;
+
+View created.
+
+..............................................Temporary Permission to User as sysdba......................................
+SQL> connect hasina as sysdba;
+Enter password:
+Connected.
+SQL>
+
+..............................................Revoke Privileges.......................................................
+SQL> revoke admin from olive;
+
+Revoke succeeded.
+
+...............................................Drop an User.............................................................
+SQL> drop user operator_1;
+
+User dropped.
