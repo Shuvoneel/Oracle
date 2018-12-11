@@ -92,7 +92,7 @@ ORA-01950: no privileges on tablespace 'SYSTEM'
 
 
 SQL> connect sys as sysdba;
-Enter password:
+Enter password: sys
 Connected.
 SQL> grant unlimited to shuvo;
 grant unlimited to shuvo

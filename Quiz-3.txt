@@ -1,0 +1,74 @@
+1. create table abc (id number(5), name varchar2(50),
+salary number(7,2), hire_date date default sysdate, address varchar2(55));
+
+2. alter table abc modify id primary key;
+
+3. insert into &table values (01, 'Mehedi', 25000, '20-Mar-1998', 'Central Road');
+	Enter value for table: abc
+	old   1: insert into &table values (01, 'Mehedi', 25000, '20-Mar-1998', 'Central Road')
+	new   1: insert into abc values (01, 'Mehedi', 25000, '20-Mar-1998', 'Central Road')
+
+	1 row created.
+
+4. insert into abc values(&id, '&name', &salary, '&hire_date', '&address');
+	Enter value for id: 02
+	Enter value for name: Hasan
+	Enter value for salary: 30000
+	Enter value for hire_date: 20-Apr-1997
+	Enter value for address: New Iskaton
+	old   1: insert into abc values(&id, '&name', &salary, '&hire_date', '&address')
+	new   1: insert into abc values(02, 'Hasan', 30000, '20-Apr-1997', 'New Iskaton')
+
+	1 row created.
+	
+5. ALTER TABLE abc ADD(phone number(15), job_title VARCHAR2(20));
+
+6. select name, job_title, salary, salary+(salary*.30) "Review Salary"
+from abc;
+
+7. select name, salary from abc Where salary =(select MIN(salary) from abc);
+
+8. update abc set job_title='Manager';
+
+9. create or replace view abc_view as select * from abc;
+
+10. create sequence abc_seq increment by 1 start with 10 nocache nocycle;
+
+11. create index abc_id_ind on abc(id);
+
+12. create table abc_backup as select * from abc;
+
+13. CREATE OR REPLACE TRIGGER abc_trigger_after AFTER insert ON abc
+	FOR EACH ROW
+	DECLARE
+	BEGIN
+	insert into abc_backup values (:new.id, :new.name, :new.salary, :new.hire_date, :new.address, :new.phone, :new.job_title);
+	dbms_output.put_line ('Data Inserted successfully into abc_backup table');
+	END;
+	/
+	
+14. CREATE OR REPLACE TRIGGER abc_trigger_update AFTER update ON abc
+	FOR EACH ROW
+	DECLARE
+	BEGIN
+	UPDATE abc_backup
+	set id = :new.id, name = :new.name, salary = :new.salary, hire_date = :new.hire_date,
+	address = :new.address, phone = :new.phone, job_title = :new.job_title
+	where id = :old.id or name = :old.name or salary = :old.salary;
+	dbms_output.put_line ('Data Updated successfully into abc_backup table');
+	END;
+	
+15. CREATE OR REPLACE TRIGGER abc_trigger_delete AFTER delete ON abc
+	FOR EACH ROW
+	DECLARE
+	BEGIN
+	DELETE from abc_backup
+	where id = :old.id or name = :old.name or salary = :old.salary;
+	dbms_output.put_line ('Data deleted successfully from abc_backup table');
+	END;
+
+16.	insert into abc values (07, 'Jahid', 55000, '20-Aug-1998', 'Katabon Road',018854784332,'Manager');
+	
+17. update abc set name = 'Kalam' where id = 06;
+
+18. delete from abc where id = 07;
