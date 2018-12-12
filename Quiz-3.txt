@@ -32,7 +32,7 @@ from abc;
 
 9. create or replace view abc_view as select * from abc;
 
-10. create sequence abc_seq increment by 1 start with 10 nocache nocycle;
+10. create sequence abc_seq increment by 1 start with 1 nocache nocycle;
 
 11. create index abc_id_ind on abc(id);
 
@@ -67,8 +67,14 @@ from abc;
 	dbms_output.put_line ('Data deleted successfully from abc_backup table');
 	END;
 
-16.	insert into abc values (07, 'Jahid', 55000, '20-Aug-1998', 'Katabon Road',018854784332,'Manager');
+16.	insert into abc values (abc_seq.nextval, 'Limon', 60000, default, 'Fuller Road', 01717677450,'Manager');
 	
 17. update abc set name = 'Kalam' where id = 06;
 
-18. delete from abc where id = 07;
+19. update abc set id = 07, hire_date = default, address = 'Elephant Road'
+where name = 'Masud';
+
+20. update abc set name = 'Taposh', hire_date = default, address = 'Azimpur Road'
+where id = 5;
+
+21. delete from abc where id = 07;

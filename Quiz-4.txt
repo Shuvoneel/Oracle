@@ -1,0 +1,134 @@
+1. create table department (id number(5) primary key, dep_name varchar2(55) unique);
+
+
+2. create table employee (
+emp_id number(5) primary key, 
+emp_name varchar2(55), 
+salary number(7,2) check(salary>25000), 
+joining_date date check(joining_date<'01-Jan-2000'), 
+dept_id number(5) not null, 
+constraint emp_dep foreign key (dept_id) references department(id));
+
+
+3. create sequence dep_seq increment by 10 start with 10 nocache nocycle;
+
+
+4. create sequence emp_seq increment by 1 start with 1 nocache nocycle;
+
+
+5. create table emp_backup as select * from employee;
+
+
+6. create table dep_backup as select * from department;
+
+
+7. insert into department values (dep_seq.nextval,'Finance');
+
+
+8. CREATE OR REPLACE TRIGGER EMP_TRIGGER AFTER INSERT ON employee
+FOR EACH ROW
+DECLARE
+BEGIN
+insert into emp_backup values(:new.emp_id, :new.emp_name, :new.salary, :new.joining_date, :new.dept_id);
+dbms_output.put_line('Data inserted successfully into emp_backup table');
+END;
+/
+
+
+9. insert into employee values (emp_seq.nextval, 'Shuvo', 26000, '12-Jan-1995', 10);
+
+
+10. CREATE OR REPLACE TRIGGER EMP_TRIGGER AFTER update ON employee
+FOR EACH ROW
+DECLARE
+BEGIN
+UPDATE emp_backup
+set emp_id = :new.emp_id, emp_name = :new.emp_name, salary = :new.salary
+where emp_id = :old.emp_id or emp_name = :old.emp_name or salary = :old.salary;
+dbms_output.put_line('Data updated successfully into emp_backup table');
+END;
+/
+
+
+11. update employee set salary = 27000 where emp_id = 2;
+
+
+12. CREATE OR REPLACE TRIGGER EMP_TRIGGER AFTER delete ON employee
+FOR EACH ROW
+DECLARE
+BEGIN
+DELETE from emp_backup where emp_id = :old.emp_id or emp_name = :old.emp_name or salary = :old.salary;
+dbms_output.put_line('Data deleted successfully from emp_backup table');
+END;
+/
+
+
+13. delete from employee where emp_id=3;
+
+
+14. CREATE OR REPLACE PROCEDURE insertEmployee(
+p_emp_id IN employee.emp_id%TYPE,
+p_emp_name IN employee.emp_name%TYPE,
+p_salary IN employee.salary%TYPE,
+p_joining_date IN employee.joining_date%TYPE,
+p_dept_id IN employee.dept_id%TYPE)
+IS
+BEGIN
+INSERT into employee(emp_id, emp_name, salary, joining_date, dept_id)
+VALUES (p_emp_id, p_emp_name, p_salary, p_joining_date, p_dept_id);
+COMMIT;
+END;
+/
+
+
+15. BEGIN
+insertEmployee(emp_seq.nextval, 'Raihan', 35000, '12-Mar-1998', 40);
+END;
+/
+
+
+16. CREATE OR REPLACE PROCEDURE updateEmployee(
+p_emp_id IN employee.emp_id%TYPE,
+p_emp_name IN employee.emp_name%TYPE,
+p_salary IN employee.salary%TYPE,
+p_joining_date IN employee.joining_date%TYPE,
+p_dept_id IN employee.dept_id%TYPE)
+IS
+BEGIN
+UPDATE employee SET emp_id=p_emp_id, emp_name=p_emp_name, salary=p_salary, joining_date=p_joining_date, dept_id=p_dept_id
+where emp_id = p_emp_id;
+COMMIT;
+END;
+/
+
+
+17. BEGIN
+updateEmployee(7, 'Raihan', 35000, '12-Mar-1998', 40);
+END;
+/
+
+
+18. CREATE OR REPLACE PROCEDURE deleteEmployee(
+p_emp_id IN employee.emp_id%TYPE)
+IS
+BEGIN
+DELETE from employee where emp_id = p_emp_id;
+COMMIT;
+END;
+/
+
+
+19. BEGIN
+deleteEmployee(6);
+END;
+/
+
+
+20. create view emp_view as select e.emp_id, e.emp_name, e.salary*12 "Anuual Sal", d.dep_name from employee e, department d where e.dept_id = d.id;
+
+
+21. create synonym esyn for emp_view;
+
+
+
+
