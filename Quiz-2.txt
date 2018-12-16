@@ -18,10 +18,9 @@ Rahim & Sons Company has 3 types of employees: Manager - 1, Supervisor - 5, and 
 
 SQL> spool E:/quis2.txt;
 
-SQL> connect sys as sysdba;
-Enter password:
-Connected.
 
+SQL> connect sys as sysdba;
+Connected.
 SQL> create role manager;
 
 Role created.
@@ -30,68 +29,91 @@ SQL> create role supervisor;
 
 Role created.
 
-SQL> create role marketing_officer;
+SQL> create role operator;
 
 Role created.
 
-SQL> grant create session, create sequence, create view, create table, create procedure to manager;
-
-Grant succeeded.
-
-SQL> grant create session, create sequence, create view, create table to supervisor;
-
-Grant succeeded.
-
-SQL> create user aaa identified by aaa;
+SQL> create user man identified by man;
 
 User created.
 
-SQL> create user bbb identified by bbb;
+SQL> create user super identified by super;
 
 User created.
+
+SQL> create user oper identified by  oper;
+
+User created.
+
+SQL> grant all privilege to manager;
+
+Grant succeeded.
 
 SQL> grant dba to manager;
 
 Grant succeeded.
 
-SQL> grant manager to aaa;
+SQL> grant manager to man;
 
 Grant succeeded.
 
-SQL> grant supervisor to bbb;
+SQL> grant create session, create table, create view, create sequence to super;
 
 Grant succeeded.
 
-SQL> grant unlimited tablespace to aaa;
+SQL> grant dba to super;
 
 Grant succeeded.
 
-SQL> grant unlimited tablespace to bbb;
+SQL> grant supervisor to super;
+
+Grant succeeded.
+
+SQL> grant create session, create table, create view, create sequence to supervisor;
+
+Grant succeeded.
+
+SQL> grant create session, create view to operator;
+
+Grant succeeded.
+
+SQL> grant operator to oper;
+
+Grant succeeded.
+
+SQL> grant unlimited tablespace to super;
 
 Grant succeeded.
 
 SQL> conn
-Enter user-name: bbb
-Enter password: bbb
+Enter user-name: super
 Connected.
-
-SQL> create table department(dept_id number(7) primary key, dept_name varchar2(50) unique);
-
-Table created.
-
-SQL> create table contact(con_id number(7) primary key, mobile number(15) unique,  country varchar2(50) default 'Bangladesh')
+SQL> create table department (
+  2  id number(5) primary key,
+  3  name varchar2(55) unique);
 
 Table created.
 
-SQL> create table employee(id number(7) primary key, emp_name varchar2(20),salary number(7) check(salary>=25000),joining_date date check(joining_date<='01-Jan-2000'), dept_id number(7) not null, con_id number(7), constraint emp_dep foreign key (dept_id) references department, constraint emp_con foreign key (con_id) references contact);
+SQL> create table contact (
+  2  id number(5) primary key,
+  3  mobile varchar2(20) unique,
+  4  country varchar2(55) default 'Bangladesh');
 
 Table created.
 
-SQL> alter table employee add constraints emp_dept_id unique (con_id);
+SQL> create table employee(
+  2    id number(5) primary key,
+  3    name varchar2(55),
+  4    salary number(7,2) check(salary>=25000),
+  5    joining_date date check(joining_date<'01-Jan-2000'),
+  6    dept_id number(5) not null,
+  7    con_id number(5) not null,
+  8    foreign key (dept_id) references department(id),
+  9    foreign key (con_id) references contact(id));
 
-Table altered.
+Table created.
 
-SQL> create sequence dept_seq increment by 10 start with 10 nocache nocycle;
+SQL> create sequence dep_seq increment by 10 start with 10 nocache nocycle;
 
 Sequence created.
 
@@ -103,90 +125,66 @@ SQL> create sequence emp_seq increment by 1 start with 1 nocache nocycle;
 
 Sequence created.
 
-SQL> SQL> insert into department(dept_id,dept_name) values(10,'Administration');
+SQL> insert into &table values(dep_seq.nextval, 'Administration');
+Enter value for table: department
+old   1: insert into &table values(dep_seq.nextval, 'Administration')
+new   1: insert into department values(dep_seq.nextval, 'Administration')
 
 1 row created.
 
-SQL> insert into department(dept_id,dept_name) values(dept_seq.nextval,'HR and Finance');
+SQL> insert into &table values(dep_seq.nextval, 'Finance');
+Enter value for table: department
+old   1: insert into &table values(dep_seq.nextval, 'Finance')
+new   1: insert into department values(dep_seq.nextval, 'Finance')
 
 1 row created.
 
-SQL> insert into department(dept_id,dept_name) values(dept_seq.nextval,'Marketing');
+SQL> insert into department values(dep_seq.nextval, '&name');
+Enter value for name: Research
+old   1: insert into department values(dep_seq.nextval, '&name')
+new   1: insert into department values(dep_seq.nextval, 'Research')
 
 1 row created.
 
-SQL> insert into department(dept_id,dept_name) values(dept_seq.nextval,'RnD');
+SQL> insert into contact values(con_seq.nextval, '+0123456', default);
 
 1 row created.
 
-SQL> insert into department(dept_id,dept_name) values(dept_seq.nextval,'Administration');
+SQL> insert into contact values(con_seq.nextval, '+0123457', 'Japan');
 
 1 row created.
 
-SQL> insert into contact(con_id,mobile,country) values(con_seq.nextval,01712345678,'Japan');
+SQL> insert into &table values(con_seq.nextval, '+0123458', 'Germany');
+Enter value for table: contact
+old   1: insert into &table values(con_seq.nextval, '+0123458', 'Germany')
+new   1: insert into contact values(con_seq.nextval, '+0123458', 'Germany')
 
 1 row created.
 
-SQL> insert into contact(con_id,mobile,country) values(con_seq.nextval,01712345679,'France');
+SQL> insert into employee values(emp_seq.nextval, 'AAA', 25000, '07-Dec-1995', 10, 5);
 
 1 row created.
 
-SQL> insert into contact(con_id,mobile,country) values(con_seq.nextval,01712345680,'Italy');
+SQL> insert into employee values(emp_seq.nextval, 'BBB', 30000, '07-Dec-1996', 20, 10);
 
 1 row created.
 
-SQL> insert into contact(con_id,mobile) values(con_seq.nextval,01712345681);
+SQL> insert into employee values(emp_seq.nextval, 'CCC', 35000, '07-Dec-1997', 30, 15);
 
 1 row created.
 
-SQL> insert into employee(id,emp_name,salary,joining_date,dept_id,con_id) values(emp_seq.nextval,'AAA',25000,'01-Feb-1998',10,10);
-
-1 row created.
-
-SQL> insert into employee(id,emp_name,salary,joining_date,dept_id,con_id) values(emp_seq.nextval,'AAA',25000,'01-Feb-1998',10,15);
-
-1 row created.
-
-SQL> insert into employee(id,emp_name,salary,joining_date,dept_id,con_id) values(emp_seq.nextval,'AAA',25000,'01-Feb-1998',10,20);
-
-1 row created.
-
-SQL> create view emp_view as select e.emp_name "Emp Name", e.salary "Monthly Sal", d.dept_name "Dept Name", c.mobile, c.country from employee e, department d, contact c where e.id=d.dept_id and e.con_id=c.con_id;
+SQL> create view emp_view as select e.id, e.name employee, e.salary*12 "Annual Salary", d.name department, c.mobile, c.country from employee e, department d, contact c
+  2  where e.dept_id = d.id and e.con_id = c.id;
 
 View created.
 
-SQL> create synonym esyn for emp_view;
-create synonym esyn for emp_view
-*
-ERROR at line 1:
-ORA-01031: insufficient privileges
-
-
-SQL> connect sys as sysdba;
-Enter password: sys
-Connected.
-
-SQL> grant create synonym to supervisor;
-
-Grant succeeded.
-
-SQL> conn
-Enter user-name: bbb
-Enter password: bb
-Connected.
+SQL> select * from emp_view;       
 
 SQL> create synonym esyn for emp_view;
 
-Synonym created.
-
-SQL> update employee set salary=30000 where emp_name='AAA';
-
-3 rows updated.
-
-SQL> update employee set salary=35000,emp_name='BBB' where con_id=15;
-
-1 row updated.
-
+Synonym created.                             
+                                                                                
+SQL> spool off;
 
 
 
