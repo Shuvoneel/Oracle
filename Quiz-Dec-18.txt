@@ -1,0 +1,35 @@
+CREATE OR REPLACE TRIGGER emp_insert AFTER insert ON emplo
+FOR EACH ROW
+DECLARE
+BEGIN
+insert into emp_backup values (:new.id, :new.emp_name, :new.salary, :new.join_date, :new.dept_id);
+dbms_output.put_line('Data inserted on emp_backup');
+END;
+/
+
+
+insert into emplo values (emp_seq.nextval, 'DDD', 29000, '01-Jan-1998', 40)
+
+
+create or replace procedure insertEmplo(
+p_id in emplo.id%type,
+p_emp_name in emplo.emp_name%type,
+p_salary in emplo.salary%type,
+p_join_date in emplo.join_date%type,
+p_dept_id in emplo.dept_id%type)
+is
+begin
+insert into emplo(id, emp_name, salary, join_date, dept_id)
+values(p_id, p_emp_name, p_salary, p_join_date, p_dept_id);
+commit;
+end;
+/
+
+
+execute insertEmplo(emp_seq.nextval, 'DDD', 29000, '01-Jan-1998', 40)
+
+
+create or replace view emp_view (emp_id, emp_name, Anual_Salary, Department_Name) as select e.id, e.emp_name, e.salary*12, d.dep_name from emplo e,dept d
+where e.dept_id = d.id
+
+update emplo set id = 4 where emp_name = 'DDD'
