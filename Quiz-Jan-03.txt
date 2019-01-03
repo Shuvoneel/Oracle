@@ -1,0 +1,112 @@
+
+				Quiz Question - Jan 03:
+
+1. create user newyear and give permission for create, view, synonym
+2. create table category id, cname, 
+3. add constraint pk for id and unique for cname
+4. create another table as employee, id, name, salary, cat_id, ountry
+	id=pk, salary>25000, cat_id fk and not null, country default bd
+5. create sequence for category like 5,10,15
+6. create sequence for employee like, 101,102,103
+7. create a trigger for employee table as insert,update,delete
+8. create a procedure for inserting data
+9. create a view for id, name, salary, country, cname
+10. create a synonym for view
+11. create an index for employee id, salary, country
+.................................................................................
+
+				Answer:
+									
+1. create user Newyear identified by newyear;
+
+2. grant dba to Newyear;
+
+3. grant all privileges to Newyear;
+
+4. grant unlimited tablespace to Newyear;
+
+		connected as Newyear user
+
+5. create table category(id number(7), cname varchar2(55));
+
+6. alter table category add constraint id_pk primary key(id);
+
+7. alter table category add constraint cname_uni unique(cname);
+
+8. create table employee(
+	id number(7) primary key, name varchar2(55) not null,
+	salary number(9,2) check(salary>=25000), cat_id number(7),
+	country varchar2(55) default 'Bangladesh',
+	foreign key (cat_id) references category(id));
+	
+9. create sequence cat_seq increment by 5 start with 5 nocache nocycle;
+
+10. create sequence emp_seq increment by 1 start with 100 nocache nocycle;
+
+11. create table emp_backup as select * from employee;
+
+12. create or replace procedure catInsert(
+	p_id in category.id%type,
+	p_cname in category.cname%type)
+	is
+	begin
+	insert into category(id, cname)
+	values(p_id,p_cname);
+	commit;
+	end;
+	/
+	
+13. execute catInsert(cat_seq.nextval, 'Admin');
+	execute catInsert(cat_seq.nextval, 'Finance');
+	execute catInsert(cat_seq.nextval, 'Research');
+	execute catInsert(cat_seq.nextval, 'Marketing');
+
+14. create or replace trigger emp_insert after insert on employee
+	for each row
+	declare
+	begin
+	insert into emp_backup values(:new.id, :new.name, :new.salary, 	:new.cat_id, :new.country);
+	dbms_output.put_line('Data inserted successfully');
+	end;
+	/
+
+15. insert into employee values(emp_seq.nextval, 'AAAA', 26000, 5,default);
+	insert into employee values(emp_seq.nextval, 'BBBB', 27000, 10,'Japan');
+	insert into employee values(emp_seq.nextval, 'CCCC', 28000, 15,'France');
+	insert into employee values(emp_seq.nextval, 'DDDD', 29000, 20,'Spain');
+	
+16. create or replace trigger emp_update after update on employee
+	for each row
+	declare
+	begin
+	update emp_backup
+	set id=:new.id, name=:new.name, salary=:new.salary, cat_id=:new.cat_id, 	country=:new.country
+	where id=:old.id or name=:old.name or country=:old.country;
+	dbms_output.put_line('Data updated successfully');
+	end;
+	/
+
+17. create or replace trigger emp_delete after delete on employee
+	for each row
+	declare
+	begin
+	delete from emp_backup
+	where id=:old.id or name=:old.name;
+	dbms_output.put_line('Data deleted successfully');
+	end;
+	/
+
+18. update employee set country = 'Italy' where id=103;
+
+19. create or replace view emp_cat_view as
+	select e.id, e.name, e.salary*12 "Annual Salary", e.country, c.cname 	"Category Name"
+	from employee e, category c
+	where e.cat_id=c.id;
+
+20. select * from emp_cat_view;
+
+21. create or replace synonym enter for emp_cat_view;
+
+22. create index emp_idx on employee(id,salary,country);
+
+
