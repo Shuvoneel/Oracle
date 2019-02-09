@@ -1,0 +1,18 @@
+			
+				MYSQL 5.6 Commands
+1. Host Address:
+	localhost:3306
+2. Username:	root
+3. Password:	1234
+4. Database Create:
+	create database database_name;
+5. Using Database:
+	use database_name;
+6. Create Table:
+	create table test(id int(11) primary key auto_increment, name varchar(50) not null);
+7. Show tables;
+8. desc tables;
+9. Database list:
+	show databases;
+10. Toad for MySQL/Oracle tool
+11. 

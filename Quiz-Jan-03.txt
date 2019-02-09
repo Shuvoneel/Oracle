@@ -65,7 +65,7 @@
 	for each row
 	declare
 	begin
-	insert into emp_backup values(:new.id, :new.name, :new.salary, 	:new.cat_id, :new.country);
+	insert into emp_backup values(:new.id, :new.name, :new.salary, 		:new.cat_id, :new.country);
 	dbms_output.put_line('Data inserted successfully');
 	end;
 	/
@@ -80,7 +80,7 @@
 	declare
 	begin
 	update emp_backup
-	set id=:new.id, name=:new.name, salary=:new.salary, cat_id=:new.cat_id, 	country=:new.country
+	set id=:new.id, name=:new.name, salary=:new.salary, cat_id=:new.cat_id, 		country=:new.country
 	where id=:old.id or name=:old.name or country=:old.country;
 	dbms_output.put_line('Data updated successfully');
 	end;
@@ -99,7 +99,7 @@
 18. update employee set country = 'Italy' where id=103;
 
 19. create or replace view emp_cat_view as
-	select e.id, e.name, e.salary*12 "Annual Salary", e.country, c.cname 	"Category Name"
+	select e.id, e.name, e.salary*12 "Annual Salary", e.country, c.cname 		"Category Name"
 	from employee e, category c
 	where e.cat_id=c.id;
 
