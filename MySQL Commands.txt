@@ -9,10 +9,15 @@
 5. Using Database:
 	use database_name;
 6. Create Table:
-	create table test(id int(11) primary key auto_increment, name varchar(50) not null);
+	create table IF NOT EXISTS role(id int(2) auto_increment primary key, role_name varchar(20) not null unique);
 7. Show tables;
 8. desc tables;
 9. Database list:
 	show databases;
 10. Toad for MySQL/Oracle tool
-11. 
+11. Insert Data:
+	insert into role(role_name) values(?);
+12. Drop database:
+	drop database salman;
+13. Drop Table:
+	drop table table_name;
