@@ -17,7 +17,11 @@
 10. Toad for MySQL/Oracle tool
 11. Insert Data:
 	insert into role(role_name) values(?);
+	insert into role(role_name) values("admin");
 12. Drop database:
 	drop database salman;
 13. Drop Table:
 	drop table table_name;
+14. Show table data using DB name:
+	select * from database_name.table_name;
+15.
