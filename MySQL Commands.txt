@@ -24,4 +24,6 @@
 	drop table table_name;
 14. Show table data using DB name:
 	select * from database_name.table_name;
-15.
+15. Drop all data from a Table:
+	delete from role;
+16. 
