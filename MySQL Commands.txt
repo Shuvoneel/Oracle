@@ -28,7 +28,9 @@
 	delete from role;
 16. Delete structure & all data from a Table:
 	 truncate table measurement;
-17. 
+17. Get Last Row From mysql Table:
+	select * from table_name ORDER BY id DESC LIMIT 1;
+18. 
 
 
 
