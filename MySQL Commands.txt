@@ -30,10 +30,36 @@
 	 truncate table measurement;
 17. Get Last Row From mysql Table:
 	select * from table_name ORDER BY id DESC LIMIT 1;
-18. 
 
+18. How to reset mysql Password
+	1. start the mysql client process using this command
 
+       		mysql -u root
 
+	2. from the mysql prompt execute this command to be able to change any password
+
+       		FLUSH PRIVILEGES;
+
+	3. Then reset/update your password
+
+       		SET PASSWORD FOR root@'localhost' = PASSWORD('password');
+
+	4. If you have a mysql root account that can connect from everywhere, you should also do:
+
+       		UPDATE mysql.user SET Password=PASSWORD('newpwd') WHERE User='root';
+
+	5. Alternate Method:
+
+       		USE mysql
+       		UPDATE user SET Password = PASSWORD('newpwd')
+       		WHERE Host = 'localhost' AND User = 'root';
+
+	6. And if you have a root account that can access from everywhere:
+
+       		USE mysql
+       		UPDATE user SET Password = PASSWORD('newpwd')
+       		WHERE Host = '%' AND User = 'root';
+19. 
 
 
 
